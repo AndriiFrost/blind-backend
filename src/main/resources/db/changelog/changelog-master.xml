@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="175714032203" author="Andrii Moroz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="blind_users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="blind_users">
+            <column autoIncrement="true" computed="false" name="blind_user_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_blind_users__blind_user_id"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="role" type="varchar(25)"/>
+            <column name="confirmed" type="boolean" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="215016032203" author="Andrii Moroz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="user_verification_tokens"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_verification_tokens">
+            <column autoIncrement="true" computed="false" name="user_verification_token_id" type="bigint">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="pk_user_verification_tokens__user_verification_token_id"/>
+            </column>
+            <column name="token" type="varchar(255)"/>
+            <column name="blind_user_id" type="bigint">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="expires_at" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="user_verification_tokens"
+                                 baseColumnNames="blind_user_id"
+                                 constraintName="fk_user_verification_tokens__blind_users"
+                                 referencedTableName="blind_users"
+                                 referencedColumnNames="blind_user_id"/>
+    </changeSet>
+</databaseChangeLog>
