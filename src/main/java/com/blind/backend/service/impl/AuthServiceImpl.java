@@ -3,7 +3,7 @@ package com.blind.backend.service.impl;
 import com.blind.backend.dto.request.AuthenticationRequest;
 import com.blind.backend.dto.request.RegisterRequest;
 import com.blind.backend.dto.response.AuthenticationResponse;
-import com.blind.backend.entity.BlindUser;
+import com.blind.backend.entity.BlindUserEntity;
 import com.blind.backend.entity.enumeration.Role;
 import com.blind.backend.repository.BlindUserRepository;
 import com.blind.backend.security.JwtService;
@@ -37,14 +37,14 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void register(RegisterRequest request) {
         checkAndThrowExceptionIfUserByEmailExist(request.getEmail());
-        BlindUser blindUser = BlindUser.builder()
+        BlindUserEntity blindUserEntity = BlindUserEntity.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        blindUserRepository.save(blindUser);
+        blindUserRepository.save(blindUserEntity);
 
     }
 
@@ -52,16 +52,17 @@ public class AuthServiceImpl implements AuthService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),
                 request.getPassword()));
-        BlindUser blindUser = blindUserRepository.findByEmail(request.getEmail())
+        BlindUserEntity blindUserEntity = blindUserRepository.findByEmail(request.getEmail())
                 .orElseThrow();
-        String jwtToken = jwtService.generateToken(blindUser);
+        String jwtToken = jwtService.generateToken(blindUserEntity);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(blindUserEntity.getRole())
                 .build();
     }
 
     private void checkAndThrowExceptionIfUserByEmailExist(String email) {
-        Optional<BlindUser> blindUserRepositoryByEmail = blindUserRepository.findByEmail(email);
+        Optional<BlindUserEntity> blindUserRepositoryByEmail = blindUserRepository.findByEmail(email);
         if (blindUserRepositoryByEmail.isPresent()) {
             log.error(String.format(USER_WITH_EMAIL_EXIST_MESSAGE, email));
             throw new IllegalArgumentException(String.format(USER_WITH_EMAIL_EXIST_MESSAGE, email));

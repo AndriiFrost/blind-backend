@@ -27,4 +27,9 @@ public class DeviceServiceImpl implements DeviceService {
                 caseForBlind);
         log.info(String.format("Response for change blind: '%s'", response));
     }
+
+    @Override
+    public boolean deviceByCodeExist(String deviceCode) {
+        return true;
+    }
 }

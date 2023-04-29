@@ -1,6 +1,6 @@
 package com.blind.backend.service.impl;
 
-import com.blind.backend.entity.BlindUser;
+import com.blind.backend.entity.BlindUserEntity;
 import com.blind.backend.entity.UserVerificationToken;
 import com.blind.backend.repository.UserVerificationTokenRepository;
 import com.blind.backend.service.BlindUserService;
@@ -24,9 +24,9 @@ public class UserVerificationTokenServiceImpl implements UserVerificationTokenSe
     @Override
     @Transactional
     public UserVerificationToken createUserVerificationToken(Long blindUserId) {
-        BlindUser blindUser = blindUserService.findBlindUserById(blindUserId);
+        BlindUserEntity blindUserEntity = blindUserService.findBlindUserById(blindUserId);
         UserVerificationToken verificationToken = UserVerificationToken.builder()
-                .blindUser(blindUser)
+                .blindUserEntity(blindUserEntity)
                 .token(UUID.randomUUID().toString())
                 .expiresAt(LocalDateTime.now().plusDays(1))
                 .build();
@@ -43,6 +43,6 @@ public class UserVerificationTokenServiceImpl implements UserVerificationTokenSe
             throw new IllegalStateException("token expired");
         }
 
-        blindUserService.confirmBlindUser(userVerificationToken.getBlindUser());
+        blindUserService.confirmBlindUser(userVerificationToken.getBlindUserEntity());
     }
 }

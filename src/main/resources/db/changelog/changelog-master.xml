@@ -53,4 +53,29 @@
                                  referencedTableName="blind_users"
                                  referencedColumnNames="blind_user_id"/>
     </changeSet>
+
+    <changeSet id="174610042023" author="Andrii Moroz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="devices"/>
+            </not>
+        </preConditions>
+        <createTable tableName="devices">
+            <column autoIncrement="true" computed="false" name="device_id" type="bigint">
+                <constraints nullable="false" primaryKey="true"
+                             primaryKeyName="pk_devices__device_id"/>
+            </column>
+            <column name="blind_user_id" type="bigint"/>
+            <column name="device_name" type="varchar(255)"/>
+            <column name="special_device_topic_sub_name" type="varchar(255)"/>
+            <column name="blind_device_option" type="varchar(255)"/>
+            <column name="special_device_code" type="varchar(255)"/>
+            <column name="special_device_password_code" type="varchar(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="devices"
+                                 baseColumnNames="blind_user_id"
+                                 constraintName="fk_devices__blind_users"
+                                 referencedTableName="blind_users"
+                                 referencedColumnNames="blind_user_id"/>
+    </changeSet>
 </databaseChangeLog>

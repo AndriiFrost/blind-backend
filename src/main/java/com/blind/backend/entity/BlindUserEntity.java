@@ -25,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Entity
 @Table(name = "blind_users", schema = "public")
-public class BlindUser implements UserDetails {
+public class BlindUserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -32,7 +32,7 @@ public class UserVerificationToken {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "blind_user_id", referencedColumnName = "blind_user_id")
-    private BlindUser blindUser;
+    private BlindUserEntity blindUserEntity;
 
     private String token;
 

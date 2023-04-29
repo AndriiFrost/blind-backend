@@ -1,10 +1,10 @@
 package com.blind.backend.service;
 
-import com.blind.backend.entity.BlindUser;
+import com.blind.backend.entity.BlindUserEntity;
 
 public interface BlindUserService {
 
-    BlindUser findBlindUserById(Long blindUserId);
+    BlindUserEntity findBlindUserById(Long blindUserId);
 
-    void confirmBlindUser(BlindUser blindUser);
+    void confirmBlindUser(BlindUserEntity blindUserEntity);
 }
