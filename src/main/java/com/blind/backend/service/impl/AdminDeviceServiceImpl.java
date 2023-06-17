@@ -28,6 +28,7 @@ public class AdminDeviceServiceImpl implements AdminDeviceService {
                 .specialDeviceCode(UUID.randomUUID().toString())
                 .specialDevicePasswordCode(UUID.randomUUID().toString())
                 .specialDeviceTopicSubName(adminCreationDeviceRequest.getSpecificDeviceTopicSubName())
+                .temperatureForSensor(99L)
                 .build();
         DeviceEntity savedDevice = deviceRepository.save(deviceEntity);
         return DeviceEntityConverterUtils.convertDeviceToAdminResponse(savedDevice);

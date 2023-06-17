@@ -67,6 +67,8 @@
             </column>
             <column name="blind_user_id" type="bigint"/>
             <column name="device_name" type="varchar(255)"/>
+            <column name="device_description" type="varchar(255)"/>
+            <column name="temperature_for_sensor" type="bigint"/>
             <column name="special_device_topic_sub_name" type="varchar(255)"/>
             <column name="blind_device_option" type="varchar(255)"/>
             <column name="special_device_code" type="varchar(255)"/>

@@ -6,5 +6,8 @@ public interface BlindUserService {
 
     BlindUserEntity findBlindUserById(Long blindUserId);
 
+
+    BlindUserEntity findCurrentUser();
+
     void confirmBlindUser(BlindUserEntity blindUserEntity);
 }

@@ -1,18 +1,20 @@
 package com.blind.backend.entity.enumeration;
 
+import lombok.Getter;
+
+@Getter
 public enum BlindDeviceOption {
 
-    OPEN_BLIND(1, 0),
-    CLOSE_BLIND(0, 1),
-    CLOSE_BLIND_WHEN_LIGHT(0, 1);
-
-    private final Integer openBlind;
+    OPEN_BLIND(1),
+    CLOSE_BLIND(2),
+    OPEN_BLIND_WHEN_LIGHT(3),
+    CLOSE_BLIND_WHEN_LIGHT(4),
+    OPEN_BLIND_WHEN_TEMPERATURE_HIGHER(5),
+    CLOSE_BLIND_WHEN_TEMPERATURE_HIGHER(6);
 
     private final Integer caseForBlind;
 
-
-    BlindDeviceOption(Integer openBlind, Integer caseForBlind) {
-        this.openBlind = openBlind;
+    BlindDeviceOption(Integer caseForBlind) {
         this.caseForBlind = caseForBlind;
     }
 }

@@ -1,14 +1,18 @@
 package com.blind.backend.controller;
 
+import com.blind.backend.dto.request.DeviceAddToUserDto;
+import com.blind.backend.dto.request.DeviceUpdateRequest;
+import com.blind.backend.dto.response.DeviceResponse;
 import com.blind.backend.service.DeviceService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,19 +23,24 @@ public class DeviceController {
 
     private final DeviceService deviceService;
 
-    @PutMapping("/register")
-    public void register(@RequestParam(name = "openBlind") String openBlind,
-                         @RequestParam(name = "caseForBlind") String caseForBlind) {
-        deviceService.updateDeviceSetting(openBlind, caseForBlind);
-    }
-
     @PostMapping
-    public boolean addNewDeviceToSystem(@RequestParam("deviceCode") String deviceCode) {
-        return deviceService.deviceByCodeExist(deviceCode);
+    public boolean addDeviceToUser(@RequestBody DeviceAddToUserDto deviceAddToUserDto) {
+        return deviceService.addDeviceToUser(deviceAddToUserDto);
     }
 
     @GetMapping
-    public List<String> getAllDevices() {
-        return List.of("Hello", "NICE");
+    public List<DeviceResponse> getAllDevices() {
+        return deviceService.getAllForCurrentUser();
+    }
+
+    @GetMapping(path = "/{deviceId}")
+    public DeviceResponse getDevice(@PathVariable(value = "deviceId") Long deviceId) {
+        return deviceService.getDevice(deviceId);
+    }
+
+    @PutMapping(path = "/{deviceId}")
+    public DeviceResponse updateDevice(@PathVariable(value = "deviceId") Long deviceId,
+                                       @RequestBody DeviceUpdateRequest deviceUpdateRequest) {
+        return deviceService.updateDevice(deviceId, deviceUpdateRequest);
     }
 }

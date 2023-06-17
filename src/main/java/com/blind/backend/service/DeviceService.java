@@ -1,8 +1,17 @@
 package com.blind.backend.service;
 
+import com.blind.backend.dto.request.DeviceAddToUserDto;
+import com.blind.backend.dto.request.DeviceUpdateRequest;
+import com.blind.backend.dto.response.DeviceResponse;
+import java.util.List;
+
 public interface DeviceService {
 
-    void updateDeviceSetting(String openBlind, String caseForBlind);
+    boolean addDeviceToUser(DeviceAddToUserDto deviceAddToUserDto);
 
-    boolean deviceByCodeExist(String deviceCode);
+    List<DeviceResponse> getAllForCurrentUser();
+
+    DeviceResponse getDevice(Long deviceId);
+
+    DeviceResponse updateDevice(Long deviceId, DeviceUpdateRequest deviceUpdateRequest);
 }

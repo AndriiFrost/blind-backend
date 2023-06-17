@@ -31,6 +31,8 @@ public class DeviceEntity {
 
     private String deviceName;
 
+    private String deviceDescription;
+
     private String specialDeviceTopicSubName;
 
     @Enumerated(value = EnumType.STRING)
@@ -39,6 +41,8 @@ public class DeviceEntity {
     private String specialDeviceCode;
 
     private String specialDevicePasswordCode;
+
+    private Long temperatureForSensor;
 
     @ManyToOne
     @JoinColumn(name = "blind_user_id")
