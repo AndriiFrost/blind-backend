@@ -38,7 +38,7 @@ public class DeviceController {
         return deviceService.getDevice(deviceId);
     }
 
-    @PutMapping(path = "/{deviceId}")
+    @PostMapping(path = "/{deviceId}")
     public DeviceResponse updateDevice(@PathVariable(value = "deviceId") Long deviceId,
                                        @RequestBody DeviceUpdateRequest deviceUpdateRequest) {
         return deviceService.updateDevice(deviceId, deviceUpdateRequest);
